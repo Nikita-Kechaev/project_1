@@ -1,0 +1,772 @@
+openapi: 3.0.3
+info:
+  description: ''
+  version: 0.0.0
+paths:
+  /api/team/:
+    get:
+      operationId: GetMOFLMembers
+      description: Получение команды проекта MOFL
+      tags:
+      - team
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MOFLMember'
+          description: ''
+  /api/callback/:
+    post:
+      operationId: CreateCallback
+      tags:
+      - callback
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Callback'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Callback'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Callback'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Callback'
+          description: ''
+  /api/callback/developers/:
+    post:
+      operationId: CreateDevelopersCallback
+      tags:
+      - callback
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CallbackDeveloper'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CallbackDeveloper'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CallbackDeveloper'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallbackDeveloper'
+          description: ''
+  /api/callback/investors/:
+    post:
+      operationId: CreateInvestorsCallback
+      tags:
+      - callback
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CallbackInvestor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CallbackInvestor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CallbackInvestor'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallbackInvestor'
+          description: ''
+  /api/callback/startups/:
+    post:
+      operationId: CreateStartupsCallback
+      tags:
+      - callback
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CallbackStartup'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CallbackStartup'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CallbackStartup'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallbackStartup'
+          description: ''
+  /api/cases/:
+    get:
+      operationId: GetCasesList
+      description: Получени списка кейсов
+      tags:
+      - case
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Количество объектов
+                  next:
+                    type: string
+                    description: Следующая страница результатов
+                  previous:
+                    type: string
+                    description: Предыдущая страница результатов
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CaseList'
+          description: ''
+  /api/cases/{id}/:
+    get:
+      operationId: GetCase
+      description: Получение конкретного кейса по `id`
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this `Кейс`.
+        required: true
+      tags:
+      - case
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseRetrieve'
+          description: ''
+  /api/cases/{id}/details/:
+    get:
+      operationId: GetDetailCase
+      description: Получение детальной информации по конкретному кейсу по `id`
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this `Кейс`.
+        required: true
+      tags:
+      - case
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseRetrieveDetail'
+          description: ''
+  /api/projects/:
+    get:
+      operationId: GetProjectsList
+      description: Получение списка проектов
+      tags:
+      - projects
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Количество объектов
+                  next:
+                    type: string
+                    description: Следующая страница результатов
+                  previous:
+                    type: string
+                    description: Предыдущая страница результатов
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProjectRetrieve'
+          description: ''
+  /api/projects/{id}/:
+    get:
+      operationId: GetProject
+      description: Получение конкретного проекта по `id`
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Проект.
+        required: true
+      tags:
+      - projects
+      security:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRetrieve'
+          description: ''
+  /api/projects/populars/:
+    get:
+      operationId: GetPopularsProjects
+      description: Получение списка популярных проектов
+      tags:
+      - projects
+      security:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRetrieve'
+          description: ''
+  /api/projects/latest/:
+    get:
+      operationId: GetLatestProjects
+      description: Получение списка последних проектов
+      tags:
+      - projects
+      security:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Количество объектов
+                  next:
+                    type: string
+                    description: Следующая страница результатов
+                  previous:
+                    type: string
+                    description: Предыдущая страница результатов
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProjectRetrieve'
+          description: ''
+  /api/subscribe/:
+    post:
+      operationId: CreateSubscribe
+      description: Добавление подписки по `email`
+      tags:
+      - subscribe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subscribe'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Subscribe'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Subscribe'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscribe'
+          description: ''
+components:
+  schemas:
+    Callback:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: ФИО / Название
+          maxLength: 255
+        phone:
+          type: string
+          description: Номер телефона
+        interests:
+          type: string
+          description: Что интересует посетителя
+      required:
+      - id
+      - interests
+      - name
+      - phone
+    CallbackDeveloper:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: ФИО
+          maxLength: 255
+        profile:
+          type: string
+          description: Профиль разработчика
+          maxLength: 255
+        email:
+          type: string
+          description: Электронная почта
+        competencies:
+          type: string
+          description: Компетенции
+      required:
+      - competencies
+      - email
+      - id
+      - name
+      - profile
+    CallbackInvestor:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: ФИО
+          maxLength: 255
+        email:
+          type: string
+          description: Электронная почта
+        phone:
+          type: string
+          description: Номер телефона
+          maxLength: 255
+        text:
+          type: string
+          description: Сообщение
+      required:
+      - email
+      - id
+      - name
+      - phone
+      - text
+    CallbackStartup:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: ФИО
+          maxLength: 255
+        email:
+          type: string
+          description: Электронная почта
+        project_title:
+          type: string
+          description: Название проекта
+        project_description:
+          type: string
+          description: Описание проекта
+        file:
+          type: string
+          format: uri
+          description: Прикрепленный файл
+      required:
+      - email
+      - file
+      - id
+      - name
+      - project_description
+      - project_title
+    CaseChapter:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          description: Заголовок пункта
+          maxLength: 255
+        description:
+          type: string
+          description: Описание
+        image:
+          type: string
+          format: uri
+          description: Картинка пункта
+        case:
+          type: integer
+          description: Пункты кейса
+      required:
+      - case
+      - description
+      - id
+      - image
+      - title
+    CaseList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          description: Заголовок кейса
+        short_description:
+          type: string
+          description: Краткое описание кейса
+        thumbnail:
+          type: string
+          format: uri
+          description: Уменьшенное изображение кейса
+      required:
+      - thumbnail
+    CaseRetrieve:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Название кейса
+          maxLength: 255
+        thumbnail:
+          type: string
+          format: uri
+          description: Уменьшенное изображение кейса
+        description:
+          type: string
+          description: Описание кейса
+        client:
+          type: string
+          description: Клиент
+          maxLength: 255
+        objective:
+          type: string
+          description: Цели кейса
+        solution:
+          type: string
+          description: Решение
+        date:
+          type: string
+          format: date
+          description: Дата создания кейса
+        similar:
+          type: array
+          items:
+            $ref: '#/components/schemas/CaseSimilar'
+          readOnly: true
+      required:
+      - client
+      - date
+      - description
+      - objective
+      - similar
+      - solution
+      - thumbnail
+      - title
+    CaseRetrieveDetail:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Название кейса
+          maxLength: 255
+        thumbnail:
+          type: string
+          format: uri
+          description: Уменьшенное изображение кейса
+        description:
+          type: string
+          description: Описание кейса
+        client:
+          type: string
+          description: Клиент
+          maxLength: 255
+        objective:
+          type: string
+          description: Цели кейса
+        solution:
+          type: string
+          description: Решение
+        date:
+          type: string
+          format: date
+          description: Дата создания кейса
+        similar:
+          type: array
+          items:
+            $ref: '#/components/schemas/CaseSimilar'
+          readOnly: true
+        chapters:
+          type: array
+          items:
+            $ref: '#/components/schemas/CaseChapter'
+          readOnly: true
+      required:
+      - chapters
+      - client
+      - date
+      - description
+      - objective
+      - similar
+      - solution
+      - thumbnail
+      - title
+    CaseSimilar:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        thumbnail:
+          type: string
+          format: uri
+          description: Уменьшенное изображение кейса
+        title:
+          type: string
+          description: Название кейса
+          maxLength: 255
+        short_description:
+          type: string
+          description: Короткое описание кейса
+      required:
+      - short_description
+      - thumbnail
+      - title
+    ProjectList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        thumbnail:
+          type: string
+          format: uri
+          description: Мини - изображение проекта
+        title:
+          type: string
+          description: Название проекта
+          maxLength: 255
+        short_description:
+          type: string
+          description: Краткое описание проекта
+      required:
+      - short_description
+      - thumbnail
+      - title
+    ProjectMember:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        photo:
+          type: string
+          format: uri
+          description: Фотография участника
+        name:
+          type: string
+          description: Имя участника
+          maxLength: 255
+        about:
+          type: string
+          description: Об участнике
+        project:
+          type: integer
+          description: Участвует в проекте
+      required:
+      - about
+      - id
+      - name
+      - photo
+      - project
+    ProjectObjective:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Номер цели
+        title:
+          type: string
+          description: Цель - заголовок
+          maxLength: 255
+        text:
+          type: string
+          description: Описание цели инвестиций
+        project:
+          type: integer
+          description: Вакансии в проекте
+      required:
+      - id
+      - order
+      - project
+      - text
+      - title
+    ProjectRetrieve:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Название проекта
+          maxLength: 255
+        banner:
+          type: string
+          format: uri
+          description: Заглавный баннер проекта
+        description:
+          type: string
+          description: Описание проекта
+        presentation:
+          type: string
+          format: uri
+          description: Файл с презентацией проекта
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectMember'
+          readOnly: true
+        vacancies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectVacancy'
+          readOnly: true
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectStage'
+          readOnly: true
+        objectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectObjective'
+          readOnly: true
+      required:
+      - banner
+      - description
+      - members
+      - objectives
+      - presentation
+      - stages
+      - title
+      - vacancies
+    ProjectStage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        year:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Год реализации
+        image:
+          type: string
+          format: uri
+          description: Картинка стадии проекта
+        text:
+          type: string
+          description: Текст под картинкой стадии
+        project:
+          type: integer
+          description: Вакансии в проекте
+      required:
+      - id
+      - image
+      - project
+      - text
+      - year
+    ProjectVacancy:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          description: Изображение вакансии
+        title:
+          type: string
+          description: Название вакансии
+          maxLength: 255
+        description:
+          type: string
+          description: Описание вакансии
+        project:
+          type: integer
+          description: Вакансии в проекте
+        tags:
+          type: array
+          items:
+            type: integer
+            description: Тэги вакансии
+          description: Тэги вакансии
+      required:
+      - description
+      - id
+      - image
+      - project
+      - tags
+      - title
+    Subscribe:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+      required:
+      - email
+      - id
+    MOFLMember:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        photo:
+          type: string
+          format: uri
+          description: Фотография участника
+        name:
+          type: string
+          description: Имя участника
+          maxLength: 255
+        about:
+          type: string
+          description: Об участнике
+      required:
+      - about
+      - id
+      - name
+      - photo
